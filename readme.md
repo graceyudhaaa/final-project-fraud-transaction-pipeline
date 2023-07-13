@@ -9,9 +9,9 @@
 ## Project Objectives
 
 ## Tools
-Orchestration: Airflow
-Compute : Virtual Machine (VM) instance
-Container : Docker
-Storage: Google Cloud Storage
-Warehouse: BigQuery
-Data Visualization: Looker
+- Orchestration: Airflow
+- Compute : Virtual Machine (VM) instance
+- Container : Docker
+- Storage: Google Cloud Storage
+- Warehouse: BigQuery
+- Data Visualization: Looker
