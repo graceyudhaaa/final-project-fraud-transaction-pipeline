@@ -26,10 +26,6 @@ with DAG(
         bash_command="download.sh"
     )
 
-    unzip_file = EmptyOperator(
-        task_id="unzip_file"
-    )
-
     upload_to_gcs = EmptyOperator(
         task_id="upload_to_gcs"
     )
