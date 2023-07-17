@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.empty import EmptyOperator
+from airflow.operators.bash import BashOperator
 
 from datetime import timedelta
 
@@ -20,8 +21,9 @@ with DAG(
         task_id="start"
     )
 
-    download_dataset = EmptyOperator(
-        task_id="download_dataset"
+    download_dataset = BashOperator(
+        task_id="download_dataset",
+        bash_command="download.sh"
     )
 
     unzip_file = EmptyOperator(

@@ -3,3 +3,5 @@ data
 .venv-3.8
 logs
 __pycache__
+*.zip
+*.csv
