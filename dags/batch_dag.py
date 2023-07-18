@@ -43,7 +43,6 @@ with DAG(
     )
 
     start >> download_dataset >>\
-    unzip_file >> upload_to_gcs >>\
-    create_bq_table >> bq_partition_clustering >>\
-    end
+    upload_to_gcs >> create_bq_table >>\
+    bq_partition_clustering >> end
 
