@@ -15,4 +15,4 @@ RUN apt install zip unzip -y
 # RUN apt install git -y
 
 USER airflow
-RUN pip install pyarrow pyspark dbt-core dbt-bigquery pandas numpy apache-airflow-providers-apache-spark airflow-dbt-python[bigquery]
+RUN pip install pyarrow pyspark dbt-core dbt-bigquery pandas numpy apache-airflow-providers-apache-spark airflow-dbt-python[bigquery] apache-airflow[google]

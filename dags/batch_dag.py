@@ -1,3 +1,4 @@
+import os
 import logging
 
 from airflow import DAG
@@ -5,6 +6,7 @@ from airflow.utils.dates import days_ago
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
 
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
@@ -14,6 +16,8 @@ from datetime import timedelta
 path_to_local_home = "/opt/airflow"
 # dataset_file = "PS_20174392719_1491204439457_log.csv"
 parquet_file = "online_transaction.parquet"
+PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
+BUCKET = os.environ.get("GCP_GCS_BUCKET")
 
 def format_to_parquet(ti):
     filename = ti.xcom_pull(task_ids='download_dataset')
@@ -53,8 +57,11 @@ with DAG(
         # },
     )
 
-    upload_to_gcs = EmptyOperator(
-        task_id="upload_to_gcs"
+    upload_to_gcs = LocalFilesystemToGCSOperator(
+        task_id="upload_to_gcs",
+        src=f"{path_to_local_home}/datasets/{parquet_file}",
+        dst=parquet_file,
+        bucket=BUCKET,
     )
 
     create_bq_table = EmptyOperator(
