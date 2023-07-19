@@ -78,6 +78,7 @@ x-airflow-common:
     - ./config:/opt/airflow/config
     - ./plugins:/opt/airflow/plugins
     - ./datasets:/opt/airflow/datasets
+    - ./service-account:/opt/airflow/service-account
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on

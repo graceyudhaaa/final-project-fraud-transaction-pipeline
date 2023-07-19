@@ -7,12 +7,12 @@ FROM apache/airflow:2.6.3
 # USER root
 
 # ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-# USER root
+USER root
 RUN apt update -y
 RUN apt upgrade -y
 RUN apt install default-jdk -y
 RUN apt install zip unzip -y
 # RUN apt install git -y
 
-# USER airflow
+USER airflow
 RUN pip install pyarrow pyspark dbt-core dbt-bigquery pandas numpy apache-airflow-providers-apache-spark airflow-dbt-python[bigquery]
