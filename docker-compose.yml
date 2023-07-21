@@ -73,6 +73,7 @@ x-airflow-common:
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     AIRFLOW_UID: 50000
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/service-account/service-account.json
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: google-cloud-platform://?key_path=%2Fopt%2Fairflow%2Fservice-account%2Fservice-account.json&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&project=final-project-test-393302&num_retries=2
     GCP_PROJECT_ID: final-project-test-393302
     GCP_GCS_BUCKET: final-project-lake
@@ -85,6 +86,7 @@ x-airflow-common:
     - ./plugins:/opt/airflow/plugins
     - ./datasets:/opt/airflow/datasets
     - ./service-account:/opt/airflow/service-account
+    - ./spark/:/opt/airflow/spark
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -311,6 +313,8 @@ services:
     hostname: spark
     environment:
       SPARK_MODE: master
+      SPARK_WORKER_MEMORY: 2G
+      SPARK_DRIVER_MEMORY: 2G
     volumes:
     - ./spark:/opt/airflow/spark
     ports:
@@ -323,6 +327,8 @@ services:
     environment:
       SPARK_MODE: worker
       SPARK_MASTER_URL: spark://spark-master:7077
+      # SPARK_WORKER_MEMORY: 2G
+      # SPARK_DRIVER_MEMORY: 2G
     volumes:
     - ./spark:/opt/airflow/spark
 
