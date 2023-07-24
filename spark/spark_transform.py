@@ -83,7 +83,7 @@ print("######################################")
 print("DROP UNNECESSARY COLUMNS")
 print("######################################")
 
-df_transform3 = df_transform2.drop('nameDest', 'oldbalanceDest', 'newbalanceDest')
+df_transform3 = df_transform2.drop('step', 'nameDest', 'oldbalanceDest', 'newbalanceDest')
 
 
 print("######################################")
