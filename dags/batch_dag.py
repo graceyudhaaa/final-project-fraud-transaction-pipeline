@@ -19,8 +19,9 @@ from google.cloud import storage
 
 path_to_local_home = "/opt/airflow"
 # dataset_file = "PS_20174392719_1491204439457_log.csv"
-parquet_file = "online_transaction.parquet"
-parquet_file_transform = f"online_transaction_transform_{datetime.now().strftime('%Y%m%d%H%M%S')}.parquet"
+date_str = datetime.now().strftime('%Y%m%d%H%M%S')
+parquet_file = f"online_transaction_{date_str}.parquet"
+parquet_file_transform = f"online_transaction_transform_{date_str}.parquet"
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'final_project_datasets')
