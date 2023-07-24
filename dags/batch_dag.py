@@ -7,6 +7,7 @@ from airflow.operators.empty import EmptyOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
 
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
@@ -22,6 +23,7 @@ parquet_file = "online_transaction.parquet"
 parquet_file_transform = f"online_transaction_transform_{datetime.now().strftime('%Y%m%d%H%M%S')}.parquet"
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
+BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'final_project_datasets')
 
 # def format_to_parquet(ti):
 #     filename = ti.xcom_pull(task_ids='download_dataset')
@@ -106,9 +108,25 @@ with DAG(
         },
     )
 
-    create_bq_table = EmptyOperator(
-        task_id="create_bq_table"
+    bigquery_external_table_task = BigQueryCreateExternalTableOperator(
+        task_id="bigquery_external_table_task",
+        table_resource={
+            "tableReference": {
+                "projectId": PROJECT_ID,
+                "datasetId": BIGQUERY_DATASET,
+                "tableId": "external_table",
+            },
+            "externalDataConfiguration": {
+                "sourceFormat": "PARQUET",
+                "sourceUris": [f"gs://{BUCKET}/datasets/{parquet_file}"],
+                "autodetect": True
+            },
+        },
     )
+
+    # create_bq_table = EmptyOperator(
+    #     task_id="create_bq_table"
+    # )
 
     bq_partition_clustering = EmptyOperator(
         task_id="bq_partition_clustering"
@@ -119,6 +137,6 @@ with DAG(
     )
 
     start >> download_dataset >> spark_data_transformation >>\
-    upload_to_gcs >> create_bq_table >>\
+    upload_to_gcs >> bigquery_external_table_task >>\
     bq_partition_clustering >> end
 
