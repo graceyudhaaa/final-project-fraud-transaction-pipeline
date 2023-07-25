@@ -81,6 +81,7 @@ x-airflow-common:
 
   volumes:
     - ./dags:/opt/airflow/dags
+    - ./dbt:/opt/airflow/dbt
     - ./logs:/opt/airflow/logs
     - ./config:/opt/airflow/config
     - ./plugins:/opt/airflow/plugins

@@ -1,0 +1,9 @@
+version: 2
+
+sources :
+  - name: staging
+    database: final-project-test-393302
+    schema: onlinepayment_stg
+  
+    tables: 
+      - name: online_payment_view

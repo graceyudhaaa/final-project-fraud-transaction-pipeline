@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-from pyspark.sql.types import StringType
+from pyspark.sql.types import StringType, IntegerType
 
 spark = SparkSession \
         .builder.appName('PreprocessData') \
@@ -44,7 +44,7 @@ print("######################################")
 print("TRANSFORM STEP TO DATETIME")
 print("######################################")
 
-df_transform = df.withColumn('datetime',
+df_transform = df.withColumn('dateTransaction',
                              F.to_timestamp(
                                  step_to_date_UDF(F.col('step'))
                             )
@@ -78,19 +78,25 @@ df_transform2 = df_transform1.withColumn('DiffOrgStatus',
                         )
                 )
 
+df_transform3 = df_transform2.withColumn("id_transaction", F.monotonically_increasing_id().cast(IntegerType()))
+
+df_transform4 = df_transform3.withColumn('id_date', F.date_format(F.col('dateTransaction'), "yyyyMMddhh").cast(IntegerType()))
+
+
+
 
 print("######################################")
 print("DROP UNNECESSARY COLUMNS")
 print("######################################")
 
-df_transform3 = df_transform2.drop('step', 'nameDest', 'oldbalanceDest', 'newbalanceDest')
+df_transform5 = df_transform4.drop('step', 'nameDest', 'oldbalanceDest', 'newbalanceDest')
 
 
 print("######################################")
 print("SAVE DATA")
 print("######################################")
 
-df_transform3.repartition(1).write.parquet(f"/opt/airflow/datasets/{output_filename}")
+df_transform5.repartition(1).write.parquet(f"/opt/airflow/datasets/{output_filename}")
 
 # df_transform4 = df_transform3.toPandas().to_parquet(f"/opt/airflow/datasets/{output_filename}", engine="pyarrow" ,index=False)
 
