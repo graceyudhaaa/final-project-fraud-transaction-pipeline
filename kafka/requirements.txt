@@ -1,0 +1,5 @@
+avro-python3
+requests
+confluent-kafka
+google-cloud-bigquery
+python-dotenv

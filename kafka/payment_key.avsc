@@ -1,0 +1,11 @@
+{
+  "namespace": "com.example.avro",
+  "type": "record",
+  "name": "PaymentFraudKey",
+  "fields": [
+    {
+        "name": "step", 
+        "type": "int"
+    }
+  ]
+}

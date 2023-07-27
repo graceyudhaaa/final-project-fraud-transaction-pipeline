@@ -1,2 +1,10 @@
 data
 .venv
+.venv-3.8
+logs
+__pycache__
+*.zip
+*.csv
+*.parquet
+service-account/*.json
+.env
