@@ -1,0 +1,18 @@
+{
+  "namespace": "com.example.avro",
+  "type": "record",
+  "name": "PaymentFraudValue",
+  "fields": [
+    {"name": "step","type" : "int"},
+    {"name": "type","type": "string"},
+    {"name": "amount","type": "float"},
+    {"name": "nameOrig","type": "string"},
+    {"name": "oldbalanceOrg","type": "float"},
+    {"name": "newbalanceOrig","type": "float"},
+    {"name": "nameDest","type": "string"},
+    {"name": "oldbalanceDest","type": "float"},
+    {"name": "newbalanceDest","type": "float"},
+    {"name": "isFraud","type": "int"},
+    {"name": "isFlaggedFraud","type": "int"}
+  ]
+}

@@ -7,3 +7,4 @@ __pycache__
 *.csv
 *.parquet
 service-account/*.json
+.env

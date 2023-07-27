@@ -3,10 +3,11 @@
 select 
     id_transaction,
     id_date,
+    id_orig,
     CAST(dateTransaction AS datetime) AS dateTransaction,
     CAST(amount AS numeric) AS amount,
     type AS transaction_type,
-    {{payment_type_desc ('type') }} AS id_type,
+    id_type,
     nameOrig AS nameOrig,
     CAST(oldbalanceOrg AS numeric) AS oldbalanceOrg,
     CAST(newbalanceOrig AS numeric) AS newbalanceOrig,

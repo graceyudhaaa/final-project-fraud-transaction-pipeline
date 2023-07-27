@@ -11,7 +11,7 @@
       
 
 SELECT 
-    DISTINCT(id_transaction),
+    DISTINCT(id_orig),
     nameOrig,
     oldbalanceOrg,
     newbalanceOrig

@@ -7,7 +7,7 @@ from airflow.operators.empty import EmptyOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
-from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryCreateEmptyDatasetOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryCreateEmptyDatasetOperator, BigQueryDeleteTableOperator
 
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
@@ -26,6 +26,7 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 BIGQUERY_STAGING_DATASET = os.environ.get("BIGQUERY_STAGING_DATASET", 'onlinepayment_stg')
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'onlinepayment_prod')
+STG_TABLE = 'stg_onlinepayment'
 
 # def format_to_parquet(ti):
 #     filename = ti.xcom_pull(task_ids='download_dataset')
@@ -140,17 +141,23 @@ with DAG(
 
     initiate_staging_task = BashOperator(
         task_id = "initiate_staging_task",
-        bash_command = "cd /opt/airflow/dbt && dbt deps && dbt run --select stg_onlinepayment --profiles-dir . --target prod"
+        bash_command = f"cd /opt/airflow/dbt && dbt deps && dbt run --select {STG_TABLE} --profiles-dir . --target prod"
     )
 
     transform_task = BashOperator(
         task_id = "transform_task",
-        bash_command = "cd /opt/airflow/dbt && dbt deps && dbt run --exclude stg_onlinepayment --profiles-dir . --target prod"
+        bash_command = f"cd /opt/airflow/dbt && dbt deps && dbt run --exclude {STG_TABLE} --profiles-dir . --target prod"
     )
 
-    bq_partition_clustering = EmptyOperator(
-        task_id="bq_partition_clustering"
+    delete_staging_table_task = BigQueryDeleteTableOperator(
+        task_id = "delete_staging_table_task",
+        deletion_dataset_table = f'{PROJECT_ID}.{BIGQUERY_DATASET}.{STG_TABLE}',
+        ignore_if_missing = True
     )
+
+    # bq_partition_clustering = EmptyOperator(
+    #     task_id="bq_partition_clustering"
+    # )
 
     end = EmptyOperator(
         task_id="end"
@@ -158,5 +165,5 @@ with DAG(
 
     start >> download_dataset >> spark_data_transformation >>\
     upload_to_gcs >> create_staging_dataset_task >> bigquery_external_table_task >>\
-    create_dataset_prod_task >> initiate_staging_task >>  transform_task >> bq_partition_clustering >> end
+    create_dataset_prod_task >> initiate_staging_task >> transform_task >> delete_staging_table_task >> end
 
