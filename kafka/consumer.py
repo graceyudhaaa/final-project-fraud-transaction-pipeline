@@ -11,7 +11,7 @@ load_dotenv()
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'service-account', 'service-account.json'))
 
-dataset_name = 'onlinepayment_record'
+dataset_name = 'onlinetransaction_stream'
 fraud_table_name = 'fraud_detection'
 payment_table_name = 'payment'
 

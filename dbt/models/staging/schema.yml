@@ -3,7 +3,7 @@ version: 2
 sources :
   - name: staging
     database: final-project-test-393302
-    schema: onlinepayment_stg
+    schema: onlinetransaction_wh
   
     tables: 
-      - name: online_payment_view
+      - name: external_table

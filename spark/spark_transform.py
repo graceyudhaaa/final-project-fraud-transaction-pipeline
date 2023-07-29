@@ -78,58 +78,19 @@ df_transform2 = df_transform1.withColumn('DiffOrgStatus',
                         )
                 )
 
-print("######################################")
-print("GENERATE IDs")
-print("######################################")
-
-df_transform3 = df_transform2.withColumn("id_transaction",
-                                         F.monotonically_increasing_id().cast(IntegerType())
-                )
-
-dim_type = df_transform3.select('type').distinct()\
-    .withColumn("id_type",
-                F.monotonically_increasing_id().cast(IntegerType())
-    )
-
-dim_orig = df_transform3.select('nameOrig', 'oldbalanceOrg', 'newbalanceOrig')\
-    .distinct().withColumn("id_orig",
-                           F.monotonically_increasing_id().cast(IntegerType())
-                )
-
-dim_date = df_transform3.select('dateTransaction').distinct()\
-    .withColumn("id_date",
-                F.monotonically_increasing_id().cast(IntegerType())
-    )
-
-df_transform_type = df_transform3.join(dim_type, 'type')
-
-df_transform_orig = df_transform_type.alias('a').join(dim_orig.alias('b'),
-                        (df_transform.nameOrig == dim_orig.nameOrig) & 
-                        (df_transform.oldbalanceOrg == dim_orig.oldbalanceOrg) &
-                        (df_transform.newbalanceOrig == dim_orig.newbalanceOrig)
-                        ).select('a.*', 'b.id_orig')
-
-df_transform_date = df_transform_orig.join(dim_date, 'dateTransaction')
-
 
 print("######################################")
 print("DROP UNNECESSARY COLUMNS")
 print("######################################")
 
-df_transform5 = df_transform_date.drop('step', 'nameDest', 'oldbalanceDest', 'newbalanceDest')
-
-df_transform6 = df_transform5.withColumn('amount', F.col('amount').cast(DoubleType()))\
-                             .withColumn('oldbalanceOrg', F.col('oldbalanceOrg').cast(DoubleType()))\
-                             .withColumn('newbalanceOrig', F.col('newbalanceOrig').cast(DoubleType()))\
-                             .withColumn('isFraud', F.col('isFraud').cast(IntegerType()))\
-                             .withColumn('isFlaggedFraud', F.col('isFlaggedFraud').cast(IntegerType()))
+df_transform3 = df_transform2.drop('step')
 
 
 print("######################################")
 print("SAVE DATA")
 print("######################################")
 
-df_transform6.repartition(1).write.parquet(f"/opt/airflow/datasets/{output_filename}")
+df_transform3.repartition(1).write.parquet(f"/opt/airflow/datasets/{output_filename}")
 
 # df_transform4 = df_transform3.toPandas().to_parquet(f"/opt/airflow/datasets/{output_filename}", engine="pyarrow" ,index=False)
 
