@@ -2,7 +2,7 @@
 
 SELECT 
     DISTINCT(id_dest),
-    nameOrig,
+    nameDest,
     oldbalanceDest,
     newbalanceDest
 

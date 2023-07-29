@@ -24,11 +24,38 @@ Image 1. Pipeline Architecture
 - Orchestration: Airflow
 - Tranformation: Spark, dbt 
 - Streaming: Kafka
-- Compute: Virtual Machine (VM) instance
 - Container: Docker
 - Storage: Google Cloud Storage
 - Warehouse: BigQuery
 - Data Visualization: Looker
+
+## Project Instruction
+##### Clone this repository and enter the directory
+```
+git clone https://github.com/graceyudhaaa/final-project-fraud-transaction-pipeline.git && cd final-project-fraud-transaction-pipeline
+```
+Create a folder named `service-account` Create a GCP project. Then, create a service account with Editor role. Download the JSON credential rename it to `service-account.json` and store it on the `service-account` folder.
+
+##### Cloud Resource Provisioning with Terraform
+1. Install [Terraform CLI](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)
+1. Change directory to terraform by executing
+    ```
+    cd terraform
+    ```
+1. Initialize Terraform (set up environment and install Google provider)
+    ```
+    terraform init
+    ```
+1. Create new infrastructure by applying Terraform plan
+    ```
+    terraform apply
+    ```
+1. Check your GCP project for newly created resources (GCS Bucket and BigQuery Datasets)
+
+##### Manually Create Resources
+Alternatively you can create the resources manually:
+1. Create a GCS bucket named `final-project-lake`, set the region to `asia-southeast2`
+1. Create two datasets in BigQuery named `onlinetransaction_wh` and `onlinetransaction_stream`
 
 ## Batch Processing
 
@@ -49,6 +76,11 @@ docker-compose up
 pip install -r requirements.txt
 ```
 
+##### Setup Email for Notification
+1. Copy the `env.example` file, rename it to `.env`
+1. Fill the required information for the sender and receiver email
+
+
 ##### Run the producer to stream the data into the Kafka topic
 ```bash
 python producer.py
@@ -67,6 +99,17 @@ Image 2. Streaming Process <br>
 Image 3. Fraud Detected Table <br>
 
 Image 4. Email Notification from Data that Detected Fraud
+
+##### DEBUGGING: Schema Registry Exited
+If you run into a problem where, the schema registry image was exited. with the message
+```
+INFO io.confluent.admin.utils.ClusterStatus - Expected 1 brokers but found only 0. Trying to query Kafka for metadata again
+```
+
+You might want to reset your firewall with running this on your command line with administrator permission
+```
+iisreset
+```
 
 
 ## Data Warehouse
