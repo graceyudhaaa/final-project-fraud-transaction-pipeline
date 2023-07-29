@@ -24,8 +24,7 @@ parquet_file = f"online_transaction.parquet"
 parquet_file_transform = f"online_transaction_transform-{date_str}.parquet"
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
-BIGQUERY_STAGING_DATASET = os.environ.get("BIGQUERY_STAGING_DATASET", 'onlinepayment_stg')
-BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'onlinepayment_prod')
+BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'onlinetransaction_wh')
 STG_TABLE = 'stg_onlinepayment'
 
 # def format_to_parquet(ti):
@@ -106,14 +105,14 @@ with DAG(
         python_callable=upload_to_gcs,
         op_kwargs={
             "bucket": BUCKET,
-            "object_name": f"datasets/{parquet_file}",                      
+            "object_name": f"datasets/online_transaction_{{{{ dag_run.get_task_instance('start').start_date }}}}.parquet",                      
             "local_file": f"{{{{ti.xcom_pull(task_ids='spark_data_transformation')}}}}",   
         },
     )
 
     create_staging_dataset_task = BigQueryCreateEmptyDatasetOperator(
         task_id="create_staging_dataset_task",
-        dataset_id=BIGQUERY_STAGING_DATASET,
+        dataset_id=BIGQUERY_DATASET,
         location="asia-southeast2",
     )
 
@@ -122,21 +121,15 @@ with DAG(
         table_resource={
             "tableReference": {
                 "projectId": PROJECT_ID,
-                "datasetId": BIGQUERY_STAGING_DATASET,
-                "tableId": "online_payment_view",
+                "datasetId": BIGQUERY_DATASET,
+                "tableId": "external_table",
             },
             "externalDataConfiguration": {
                 "sourceFormat": "PARQUET",
-                "sourceUris": [f"gs://{BUCKET}/datasets/{parquet_file}"],
+                "sourceUris": [f"gs://{BUCKET}/datasets/online_transaction_{{{{ dag_run.get_task_instance('start').start_date }}}}.parquet"],
                 "autodetect": True
             },
         },
-    )
-
-    create_dataset_prod_task = BigQueryCreateEmptyDatasetOperator(
-        task_id="create_dataset_prod_task",
-        dataset_id=BIGQUERY_DATASET,
-        location="asia-southeast2",
     )
 
     initiate_staging_task = BashOperator(
@@ -165,5 +158,5 @@ with DAG(
 
     start >> download_dataset >> spark_data_transformation >>\
     upload_to_gcs >> create_staging_dataset_task >> bigquery_external_table_task >>\
-    create_dataset_prod_task >> initiate_staging_task >> transform_task >> delete_staging_table_task >> end
+    initiate_staging_task >> transform_task >> delete_staging_table_task >> end
 

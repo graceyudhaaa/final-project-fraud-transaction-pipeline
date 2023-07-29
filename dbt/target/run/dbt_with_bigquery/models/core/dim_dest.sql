@@ -2,7 +2,7 @@
   
     
 
-    create or replace table `final-project-test-393302`.`onlinetransaction_wh`.`dim_orig`
+    create or replace table `final-project-test-393302`.`onlinetransaction_wh`.`dim_dest`
     
     
 
@@ -11,10 +11,10 @@
       
 
 SELECT 
-    DISTINCT(id_orig),
+    DISTINCT(id_dest),
     nameOrig,
-    oldbalanceOrg,
-    newbalanceOrig
+    oldbalanceDest,
+    newbalanceDest
 
 FROM `final-project-test-393302`.`onlinetransaction_wh`.`stg_onlinepayment`
     );
