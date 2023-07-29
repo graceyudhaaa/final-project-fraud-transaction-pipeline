@@ -110,12 +110,6 @@ with DAG(
         },
     )
 
-    create_staging_dataset_task = BigQueryCreateEmptyDatasetOperator(
-        task_id="create_staging_dataset_task",
-        dataset_id=BIGQUERY_DATASET,
-        location="asia-southeast2",
-    )
-
     bigquery_external_table_task = BigQueryCreateExternalTableOperator(
         task_id="bigquery_external_table_task",
         table_resource={
@@ -157,6 +151,6 @@ with DAG(
     )
 
     start >> download_dataset >> spark_data_transformation >>\
-    upload_to_gcs >> create_staging_dataset_task >> bigquery_external_table_task >>\
+    upload_to_gcs >> bigquery_external_table_task >>\
     initiate_staging_task >> transform_task >> delete_staging_table_task >> end
 
