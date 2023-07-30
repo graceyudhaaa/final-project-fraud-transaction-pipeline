@@ -71,10 +71,10 @@ print("######################################")
 df_transform2 = df_transform1.withColumn('DiffOrgStatus',
                         F.when(
                             F.col('amount') == F.col('DiffOrg'),
-                            1
+                            0
                         )\
                         .otherwise(
-                            0
+                            1
                         )
                 )
 
