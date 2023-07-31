@@ -47,8 +47,14 @@ print("######################################")
 df_transform = df.withColumn('dateTransaction',
                              F.to_timestamp(
                                  step_to_date_UDF(F.col('step'))
-                            )
-                )
+                            ))
+
+df_transform = df_transform.withColumn("amount", df_transform["amount"].cast(DoubleType())) \
+    .withColumn("isFlaggedFraud", df_transform["isFlaggedFraud"].cast(IntegerType())) \
+    .withColumn("isFraud", df_transform["isFraud"].cast(IntegerType())) \
+    .withColumn("datetime", df_transform["datetime"].cast(TimestampType())) \
+    .withColumn("oldbalanceOrg", df_transform["oldbalanceOrg"].cast(DoubleType())) \
+    .withColumn("newbalanceOrig", df_transform["newbalanceOrig"].cast(DoubleType())) 
 
 print("######################################")
 print("TRANSFORM DiffOrg")
