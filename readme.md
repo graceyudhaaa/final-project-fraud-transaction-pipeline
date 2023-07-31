@@ -112,10 +112,16 @@ cd final-project-fraud-transaction-pipeline
 docker-compose up
 ```
 #### Open Airflow with username and password "airflow" to run the DAG
-##### add supporting images please Example : https://drive.google.com/file/d/1SKG3i3vXjvoPRIb8zb_dkqOx9QTID1aR/view?usp=drive_link
+```
+localhost:8080
+```
+![airflow DAG](images/airflow-dag.png)
 
 #### Open Spark to monitor Spark master and Spark workers
-##### add supporting images please example : https://drive.google.com/file/d/1SKG3i3vXjvoPRIb8zb_dkqOx9QTID1aR/view?usp=drive_link
+```
+localhost:8081
+```
+![Spark Master](images/spark-master.png)
 
 ## Streaming Processing
 
