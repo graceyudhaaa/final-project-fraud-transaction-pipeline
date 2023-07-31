@@ -1,0 +1,9 @@
+version: 2
+
+sources :
+  - name: staging
+    database: final-project-393220
+    schema: onlinetransaction_wh
+  
+    tables: 
+      - name: external_table

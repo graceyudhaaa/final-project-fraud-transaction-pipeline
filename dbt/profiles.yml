@@ -1,0 +1,24 @@
+dbt_with_bigquery:
+  outputs:
+    stg:
+      dataset: onlinetransaction_wh
+      fixed_retries: 1
+      keyfile: /opt/airflow/service-account/service-account.json
+      method: service-account
+      priority: interactive
+      project: "final-project-393220"
+      threads: 2
+      timeout_seconds: 300
+      type: bigquery
+    prod:
+      dataset: onlinetransaction_wh
+      fixed_retries: 1
+      keyfile: /opt/airflow/service-account/service-account.json
+      method: service-account
+      priority: interactive
+      project: "final-project-393220"
+      threads: 2
+      timeout_seconds: 300
+      type: bigquery
+  target: prod
+  
