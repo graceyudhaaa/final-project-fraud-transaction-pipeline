@@ -1,9 +1,0 @@
-version: 2
-
-sources :
-  - name: staging
-    database: final-project-test-393302
-    schema: onlinetransaction_wh
-  
-    tables: 
-      - name: external_table
