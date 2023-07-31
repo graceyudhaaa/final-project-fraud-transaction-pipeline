@@ -67,7 +67,7 @@ default_args = {
 with DAG(
     dag_id="batch_workflow",
     default_args=default_args,
-    schedule_interval="@weekly"
+    schedule_interval="@monthly"
 ) as dag:
     start = EmptyOperator(
         task_id="start"
