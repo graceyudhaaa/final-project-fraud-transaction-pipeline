@@ -2,8 +2,8 @@
   
     
 
-    create or replace table `final-project-test-393302`.`onlinetransaction_wh`.`fact_table`
-    partition by timestamp_trunc(date, day)
+    create or replace table `final-project-393220`.`onlinetransaction_wh`.`fact_table`
+    
     
 
     OPTIONS()
@@ -21,12 +21,12 @@ SELECT DISTINCT
     stg.isFlaggedFraud AS isFlaggedFraud,
     stg.DiffOrg AS DiffOrg,
     stg.DiffOrgStatus AS DiffOrgStatus
-FROM `final-project-test-393302`.`onlinetransaction_wh`.`stg_onlinepayment` AS stg
-LEFT JOIN `final-project-test-393302`.`onlinetransaction_wh`.`dim_dest` AS dest
+FROM `final-project-393220`.`onlinetransaction_wh`.`stg_onlinepayment` AS stg
+LEFT JOIN `final-project-393220`.`onlinetransaction_wh`.`dim_dest` AS dest
     ON stg.id_dest = dest.id_dest
-LEFT JOIN `final-project-test-393302`.`onlinetransaction_wh`.`dim_type` AS transaction_type
+LEFT JOIN `final-project-393220`.`onlinetransaction_wh`.`dim_type` AS transaction_type
     ON stg.id_type = transaction_type.id_type
-LEFT JOIN `final-project-test-393302`.`onlinetransaction_wh`.`dim_orig` AS orig
+LEFT JOIN `final-project-393220`.`onlinetransaction_wh`.`dim_orig` AS orig
     ON stg.id_orig = orig.id_orig
     );
   

@@ -6,7 +6,7 @@ dbt_with_bigquery:
       keyfile: /opt/airflow/service-account/service-account.json
       method: service-account
       priority: interactive
-      project: "final-project-test-393302"
+      project: "final-project-393220"
       threads: 2
       timeout_seconds: 300
       type: bigquery
@@ -16,7 +16,7 @@ dbt_with_bigquery:
       keyfile: /opt/airflow/service-account/service-account.json
       method: service-account
       priority: interactive
-      project: "final-project-test-393302"
+      project: "final-project-393220"
       threads: 2
       timeout_seconds: 300
       type: bigquery

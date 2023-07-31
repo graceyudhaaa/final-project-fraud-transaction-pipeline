@@ -2,14 +2,13 @@
   
     
 
-    create or replace table `final-project-393220`.`onlinetransaction_wh`.`clustered_difforg`
+    create or replace table `final-project-393220`.`onlinetransaction_wh`.`clustered_paymenttype`
     
-    cluster by DiffOrgStatus
+    cluster by id_type
 
     OPTIONS()
     as (
       
-
 
 SELECT
     *

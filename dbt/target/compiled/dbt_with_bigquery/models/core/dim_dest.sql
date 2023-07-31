@@ -6,4 +6,4 @@ SELECT
     oldbalanceDest,
     newbalanceDest
 
-FROM `final-project-test-393302`.`onlinetransaction_wh`.`stg_onlinepayment`
+FROM `final-project-393220`.`onlinetransaction_wh`.`stg_onlinepayment`

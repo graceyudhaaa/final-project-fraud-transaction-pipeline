@@ -35,7 +35,7 @@ models:
     # Config indicated by + and applies to all files under models/example/
     staging:
       +materialized: view
-    warehouse:
+    core:
       +materialized: table
     mart:
       +materialized: view

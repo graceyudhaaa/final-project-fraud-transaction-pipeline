@@ -25,4 +25,4 @@ select
     CAST(DiffOrg AS integer) AS DiffOrg,    
     CAST(DiffOrgStatus AS integer) AS DiffOrgStatus,
 
-from `final-project-test-393302`.`onlinetransaction_wh`.`external_table`
+from `final-project-393220`.`onlinetransaction_wh`.`external_table`

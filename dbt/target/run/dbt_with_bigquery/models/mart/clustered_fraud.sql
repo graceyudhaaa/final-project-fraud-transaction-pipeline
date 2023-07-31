@@ -1,11 +1,18 @@
 
+  
+    
 
-  create or replace view `final-project-test-393302`.`onlinetransaction_wh`.`clustered_fraud`
-  OPTIONS()
-  as 
+    create or replace table `final-project-393220`.`onlinetransaction_wh`.`clustered_fraud`
+    
+    cluster by isFraud
+
+    OPTIONS()
+    as (
+      
 
 SELECT
     *
 FROM
-    `final-project-test-393302`.`onlinetransaction_wh`.`fact_table`;
-
+    `final-project-393220`.`onlinetransaction_wh`.`fact_table`
+    );
+  

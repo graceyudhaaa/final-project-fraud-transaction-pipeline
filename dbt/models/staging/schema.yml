@@ -2,7 +2,7 @@ version: 2
 
 sources :
   - name: staging
-    database: final-project-test-393302
+    database: final-project-393220
     schema: onlinetransaction_wh
   
     tables: 

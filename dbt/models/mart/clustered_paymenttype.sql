@@ -1,10 +1,10 @@
 {{ config(
   materialized = 'table',
-  cluster_by = 'isFraud' 
+  cluster_by = 'id_type' 
   )
 }}
 
 SELECT
     *
-FROM
+FROM 
     {{ ref('fact_table') }}

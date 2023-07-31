@@ -1,6 +1,6 @@
 
 
-  create or replace view `final-project-test-393302`.`onlinetransaction_wh`.`stg_onlinepayment`
+  create or replace view `final-project-393220`.`onlinetransaction_wh`.`stg_onlinepayment`
   OPTIONS()
   as 
 
@@ -29,5 +29,5 @@ select
     CAST(DiffOrg AS integer) AS DiffOrg,    
     CAST(DiffOrgStatus AS integer) AS DiffOrgStatus,
 
-from `final-project-test-393302`.`onlinetransaction_wh`.`external_table`;
+from `final-project-393220`.`onlinetransaction_wh`.`external_table`;
 
