@@ -5,7 +5,7 @@ You can download the dataset [here](https://drive.google.com/file/d/1LmPGE7Vgn1y
 
 ## Bussiness Understanding
 ### Problem Description
-A Digital Wallet company has quite a large amount of online transaction data. The company wants to know whether the data they have is data that has good data quality or not. On the other hand, the company also wants to use online transaction data to detect online payment fraud that harms their business.
+A Digital Wallet company has quite a large amount of online transaction data. The company wants to acknowledging data limitation and uncertainties such as inaccurate or missing crucial information data. On the other hand, the company also wants to use online transaction data to detect online payment fraud that harms their business.
 
 ### Goals
 Create a data pipeline that can be utilised for analysis and reporting to determine whether online transaction data has excellent data quality and can be used to detect fraud in online transactions. 
@@ -16,9 +16,9 @@ Create a data pipeline that can be utilised for analysis and reporting to determ
 
 ## Pipeline Architecture
 
-
-
 Image 1. Pipeline Architecture
+![architecture](images/architecture.png)
+
 
 ## Tools
 - Orchestration: Airflow
@@ -94,11 +94,15 @@ python consumer.py
 
 Data will be loaded into the record table for all transactions in BigQuery, and if any data is detected as fraud, it will be recorded in the detected_fraud table, and an automatic email notification indicating fraud will be sent.
 
+
 Image 2. Streaming Process <br>
+![streaming-process](images/fraud-detection.gif)
 
 Image 3. Fraud Detected Table <br>
+![fraud-table](images/fraud-table.jpeg)
 
 Image 4. Email Notification from Data that Detected Fraud
+![notification](images/notification.jpeg)
 
 ##### DEBUGGING: Schema Registry Exited
 If you run into a problem where, the schema registry image was exited. with the message
@@ -115,3 +119,10 @@ iisreset
 ## Data Warehouse
 
 ## Analytic and Visualization
+The outcome of this comprehensive data pipeline project is a dashboard that allows someone get insight for fraudulent transaction.
+
+Our dashboard through the following link:
+[Online Transaction Fraud Dashboard](quora.com/profile/Ashish-Kulkarni-100)
+
+![architecture](images/dashboard-1.jpg)
+![architecture](images/dashboard-2.jpg)
