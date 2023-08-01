@@ -16,8 +16,8 @@ Create a data pipeline that can be utilised for analysis and reporting to determ
 
 ## Pipeline Architecture
 
-Image 1. Pipeline Architecture
 ![architecture](images/architecture.png)
+Image 1. Pipeline Architecture
 
 
 ## Tools
@@ -158,15 +158,14 @@ python consumer.py
 
 Data will be loaded into the record table for all transactions in BigQuery, and if any data is detected as fraud, it will be recorded in the detected_fraud table, and an automatic email notification indicating fraud will be sent.
 
-
-Image 2. Streaming Process <br>
 ![streaming-process](images/fraud-detection.gif)
+Image 2. Streaming Process <br
 
-Image 3. Fraud Detected Table <br>
 ![fraud-table](images/fraud-table.jpeg)
+Image 3. Fraud Detected Table <br>
 
-Image 4. Email Notification from Data that Detected Fraud
 ![notification](images/notification.jpeg)
+Image 4. Email Notification from Data that Detected Fraud
 
 ##### DEBUGGING: Schema Registry Exited
 If you run into a problem where, the schema registry image was exited. with the message
@@ -181,12 +180,26 @@ iisreset
 
 
 ## Data Warehouse
+In this project, we use star-schema to define the data warehouse. In the warehouse there are several tables, namely: 
+<br>
+a. Dim Type 
+<br>
+b. Dim Origin 
+<br>
+c. Dim Dest 
+<br>
+d. Fact Transaction
+
+Here is the data warehouse schema that we developed.
+![dashboard-1](images/data-warehouse-design.jpeg)
+Image 5. Data Warehouse Schema
 
 ## Analytic and Visualization
 The outcome of this comprehensive data pipeline project is a dashboard that allows someone get insight for fraudulent transaction.
 
 Our dashboard through the following link:
-[Online Transaction Fraud Dashboard](quora.com/profile/Ashish-Kulkarni-100)
+[Online Transaction Fraud Dashboard](https://lookerstudio.google.com/reporting/eef88548-5ad4-4b22-82c4-37b7bb29ce0e)
 
-![architecture](images/dashboard-1.jpg)
-![architecture](images/dashboard-2.jpg)
+![dashboard-1](images/dashboard-1.jpg)
+![dashboard-2](images/dashboard-2.jpg)
+Image 6. Dashboard Visualization
