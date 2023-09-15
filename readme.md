@@ -1,7 +1,9 @@
 # Final Project: Fraud Transaction Pipeline
 
-## Data
-You can download the dataset [here](https://drive.google.com/file/d/1LmPGE7Vgn1yYszM0s9nwfmwr36RHI3BB/view?usp=drive_link)
+**Dataset** : You can download the dataset [here](https://drive.google.com/file/d/1LmPGE7Vgn1yYszM0s9nwfmwr36RHI3BB/view?usp=drive_link) <br>
+**Presentation Deck** : View presentation deck [here](https://www.canva.com/design/DAFp8g3_K-M/4F6yNiyhJDTIdD6i_OhaVA/view?utm_content=DAFp8g3_K-M&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+<br>
+<br>
 
 ## Bussiness Understanding
 ### Problem Description
@@ -159,7 +161,7 @@ python consumer.py
 Data will be loaded into the record table for all transactions in BigQuery, and if any data is detected as fraud, it will be recorded in the detected_fraud table, and an automatic email notification indicating fraud will be sent.
 
 ![streaming-process](images/fraud-detection.gif)
-Image 2. Streaming Process <br
+Image 2. Streaming Process <br>
 
 ![fraud-table](images/fraud-table.jpeg)
 Image 3. Fraud Detected Table <br>
